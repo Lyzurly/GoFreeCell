@@ -41,4 +41,3 @@ func on_game_won(deal_nbr: int, moves: int, time_s: int, _is_challenge_deal: boo
 		hard_deals_won.append(deal_nbr)
 	
 	player_stats_changed.emit()
-

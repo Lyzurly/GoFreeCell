@@ -1,21 +1,21 @@
 [gd_scene load_steps=21 format=3 uid="uid://ssi8qn4aqiry"]
 
 [ext_resource type="Texture2D" uid="uid://b801ytd73ub2q" path="res://artwork/board/cell.png" id="1_1maw1"]
-[ext_resource type="Script" path="res://board.gd" id="1_61gtw"]
+[ext_resource type="Script" uid="uid://dpdaxto5sj550" path="res://board.gd" id="1_61gtw"]
 [ext_resource type="Texture2D" uid="uid://2g8ax888qqx6" path="res://artwork/board/background.png" id="2_85hxy"]
-[ext_resource type="Script" path="res://cell.gd" id="2_xf0fn"]
+[ext_resource type="Script" uid="uid://cc864rrsyodu5" path="res://cell.gd" id="2_xf0fn"]
 [ext_resource type="Theme" uid="uid://cu3iwi035266x" path="res://label_theme.theme" id="3_07em3"]
-[ext_resource type="Script" path="res://undo.gd" id="4_6cew4"]
-[ext_resource type="Script" path="res://deal_nbr.gd" id="4_igxoy"]
-[ext_resource type="Script" path="res://game_stats.gd" id="5_1ul02"]
-[ext_resource type="Script" path="res://settings_button.gd" id="6_00bmi"]
+[ext_resource type="Script" uid="uid://ccx72xysh1tvp" path="res://undo.gd" id="4_6cew4"]
+[ext_resource type="Script" uid="uid://c2sdprfb3upa8" path="res://deal_nbr.gd" id="4_igxoy"]
+[ext_resource type="Script" uid="uid://dkjba0ib6td7j" path="res://game_stats.gd" id="5_1ul02"]
+[ext_resource type="Script" uid="uid://ca010iu103vik" path="res://settings_button.gd" id="6_00bmi"]
 [ext_resource type="Texture2D" uid="uid://bkgy7t27ictt6" path="res://artwork/icons/undo.png" id="6_6pe30"]
 [ext_resource type="Texture2D" uid="uid://nkwynw8v67x4" path="res://artwork/icons/settings.png" id="7_t0b35"]
-[ext_resource type="Script" path="res://deal_menu.gd" id="8_ohcwr"]
-[ext_resource type="Script" path="res://deal_button.gd" id="10_dvi0k"]
-[ext_resource type="Script" path="res://stats_popup.gd" id="15_eq6we"]
-[ext_resource type="Script" path="res://settings_popup.gd" id="15_os37y"]
-[ext_resource type="Script" path="res://victory_popup.gd" id="16_ifrha"]
+[ext_resource type="Script" uid="uid://bwbgy4kmd5sxu" path="res://deal_menu.gd" id="8_ohcwr"]
+[ext_resource type="Script" uid="uid://co7e6xbag2xnu" path="res://deal_button.gd" id="10_dvi0k"]
+[ext_resource type="Script" uid="uid://dgkruilbruab" path="res://stats_popup.gd" id="15_eq6we"]
+[ext_resource type="Script" uid="uid://bq8jisb5mpl3w" path="res://settings_popup.gd" id="15_os37y"]
+[ext_resource type="Script" uid="uid://cxjvpp7beitcw" path="res://victory_popup.gd" id="16_ifrha"]
 [ext_resource type="PackedScene" uid="uid://dan5llmvjq3e8" path="res://game_timer.tscn" id="16_mhao6"]
 [ext_resource type="AudioStream" uid="uid://bg3wsglxamob5" path="res://audio/cardsoft.wav" id="18_l4m40"]
 [ext_resource type="AudioStream" uid="uid://bglpn7g7vpiit" path="res://audio/cardhard.wav" id="19_au1m8"]
@@ -766,8 +766,8 @@ text = "Difficulty"
 layout_mode = 2
 size_flags_horizontal = 10
 theme = ExtResource("3_07em3")
-item_count = 3
 selected = 0
+item_count = 3
 popup/item_0/text = "Any"
 popup/item_0/id = 0
 popup/item_1/text = "Easy"
@@ -805,8 +805,8 @@ layout_mode = 2
 size_flags_horizontal = 10
 theme = ExtResource("3_07em3")
 alignment = 2
-item_count = 4
 selected = 0
+item_count = 4
 popup/item_0/text = "Always"
 popup/item_0/id = 0
 popup/item_1/text = "On foundation move"

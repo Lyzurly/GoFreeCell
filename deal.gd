@@ -67,10 +67,9 @@ static func _deal(board: Board, deal_nbr: int):
 		deck.pop_back()
 		var card = packed_card.instantiate()
 		board.tableau_cells[column].add_child(card)
-		var rank = (card_nbr / 4) + 1
-		var suit = card_nbr % 4
-		card.init(suit,rank,board.tableau_cells[column])
+		var rank = (card_nbr >> 2) + 1 # Utilizes the int's underlying bitwise value by shifting card_number's equivalent bits to the right by 2 steps. The same as dividing by 4 without triggering a float -> int conversion.
+		var suit = card_nbr & 3
+		card.init(suit, rank, board.tableau_cells[column])
 
 		column = (column + 1) % board.tableau_cells.size()
 		cards_left -= 1	
-

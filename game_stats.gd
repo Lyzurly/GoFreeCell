@@ -23,9 +23,8 @@ func on_new_game_started(_game_nbr: int, _is_challenge_deal: bool):
 
 func display_timer(_game_counter: int):
 	while !board.game_completed && _game_counter == game_counter:
-		var time_passed_s: int = game_timer.game_time_ms / 1000
-		var minutes: int = time_passed_s / 60
+		var time_passed_s: int = Static.bitwise_ms_to_s(game_timer.game_time_ms)
+		var minutes: int = Static.bitwise_s_to_m(time_passed_s)
 		var seconds: int = time_passed_s % 60
 		timer.text = "%s:%02d" % [minutes, seconds]
 		await get_tree().create_timer(1).timeout
-	

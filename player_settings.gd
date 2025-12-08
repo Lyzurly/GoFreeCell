@@ -9,6 +9,7 @@ enum Autocomplete {ALWAYS, ON_FOUNDATION_MOVE, ONLY_AT_END, ASK_AT_END, NEVER}
 @export var auto_complete: Autocomplete
 @export var background_color: Color
 
+@warning_ignore("unused_signal")
 signal player_settings_changed()
 
 func _init():
