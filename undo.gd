@@ -2,10 +2,9 @@ class_name Undo
 extends TextureButton
 
 var undo_stack: Array[Move]
-@onready var board = $/root/Game/Board
 
 func _ready():
-	board.card_moved.connect(on_card_moved)
+	Board.ref.card_moved.connect(on_card_moved)
 
 func on_card_moved(card: Card, source: Cell, target: Cell):
 	undo_stack.push_back(Move.new(card, source, target))

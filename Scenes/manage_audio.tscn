@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://e3ab7i2uqk01"]
+
+[ext_resource type="Script" uid="uid://17yrh7n7f3pw" path="res://Scripts/manage_audio.gd" id="1_l5rth"]
+[ext_resource type="AudioStream" uid="uid://bg3wsglxamob5" path="res://audio/card_soft.wav" id="1_y8l05"]
+[ext_resource type="AudioStream" uid="uid://bglpn7g7vpiit" path="res://audio/card_hard.wav" id="2_c8j57"]
+
+[node name="ManageAudio" type="Node"]
+script = ExtResource("1_l5rth")
+
+[node name="Revert" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("1_y8l05")
+
+[node name="Snap" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_c8j57")
+
+[node name="Foundation" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_c8j57")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]

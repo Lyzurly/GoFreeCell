@@ -2,13 +2,13 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://bglpn7g7vpiit"
-path="res://.godot/imported/cardhard.wav-b18c67dc7e1e24e161d0cbbf114daa22.sample"
+uid="uid://bg3wsglxamob5"
+path="res://.godot/imported/card_soft.wav-505764e9f8927bad2718af98becedbb1.sample"
 
 [deps]
 
-source_file="res://audio/cardhard.wav"
-dest_files=["res://.godot/imported/cardhard.wav-b18c67dc7e1e24e161d0cbbf114daa22.sample"]
+source_file="res://audio/card_soft.wav"
+dest_files=["res://.godot/imported/card_soft.wav-505764e9f8927bad2718af98becedbb1.sample"]
 
 [params]
 

@@ -1,4 +1,4 @@
-class_name Static extends Node
+class_name HelpersUtility
 
 ## Derived from 2^32 divided by 1000 and then rounded. Used in a bitwise operation to convert ms to seconds (ms/1000) using bitwise math to avoid [class float] -> [class int] conversion.
 const BITWISE_DIVISOR_1000: int = 4294967

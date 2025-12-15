@@ -1,0 +1,19 @@
+[gd_scene load_steps=5 format=3 uid="uid://bnd4vl28os1k7"]
+
+[ext_resource type="PackedScene" uid="uid://e3ab7i2uqk01" path="res://Scenes/manage_audio.tscn" id="1_nrf46"]
+[ext_resource type="Script" uid="uid://be3afgfoa4uo6" path="res://Scripts/manage_game_timer.gd" id="2_cvis2"]
+[ext_resource type="Script" uid="uid://dyq0li23dyl1k" path="res://Scripts/manage_game_states.gd" id="3_0gsl3"]
+[ext_resource type="Script" uid="uid://c6ufccwicqhis" path="res://Scripts/manage_gameplay.gd" id="4_0gsl3"]
+
+[node name="Managers" type="Node"]
+
+[node name="ManageAudio" parent="." instance=ExtResource("1_nrf46")]
+
+[node name="ManageTimer" type="Node" parent="."]
+script = ExtResource("2_cvis2")
+
+[node name="ManageGameStates" type="Node" parent="."]
+script = ExtResource("3_0gsl3")
+
+[node name="ManageGameplay" type="Node" parent="."]
+script = ExtResource("4_0gsl3")

@@ -13,20 +13,20 @@ func toggle_deal_buttons():
 	deal_buttons.visible = !deal_buttons.visible
 
 func challenge_deal():
-	Deal.challenge_deal(board)
+	DealsUtility.start_challenge_deal()
 	deal_buttons.visible = false
 
 func random_deal():
-	Deal.random_deal(board)
+	DealsUtility.start_random_deal()
 	deal_buttons.visible = false
 
 func custom_deal(deal_nbr: String):
-	Deal.custom_deal(board, deal_nbr as int)
+	DealsUtility.start_custom_deal(deal_nbr as int)
 	deal_number_popup.visible = false
 	deal_buttons.visible = false
 
 func redeal():
-	Deal.redeal(board)
+	DealsUtility.redeal()
 	deal_buttons.visible = false
 
 func open_deal_number_popup():
@@ -36,4 +36,3 @@ func open_deal_number_popup():
 
 func _on_deal_pressed():
 	pass # Replace with function body.
-

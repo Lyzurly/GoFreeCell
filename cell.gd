@@ -8,8 +8,6 @@ const cascade_space = 36
 @export var type: CellType
 var cards: Array[Card] 
 
-@onready var board: Board = $/root/Game/Board
-
 func add_card(card: Card, automove: bool = false):
 	while card != null:
 		var original_position = card.global_position
@@ -29,7 +27,7 @@ func add_card(card: Card, automove: bool = false):
 		card = card.child
 
 	if type == CellType.FoundationCell:
-		board.check_game_completed()
+		Board.ref.check_game_completed()
 	
 func automove_complete(card: Card):
 	card.z_index = cards.find(card) + 1
@@ -71,7 +69,7 @@ func is_card_allowed(card: Card) -> bool:
 		CellType.TableauCell:
 			if !card.is_legal_cascade():
 				return false
-			var freecell_amount = board.get_moveable_cascade_size(self)
+			var freecell_amount = Board.ref.get_moveable_cascade_size(self)
 			#if self.cards.is_empty():
 			#	freecell_amount -= 1
 			if freecell_amount < card.get_cascade_size() - 1:
@@ -95,4 +93,3 @@ func get_next_rank() -> int:
 		return 1
 	else:
 		return cards[-1].rank + 1
-

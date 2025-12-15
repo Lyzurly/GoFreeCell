@@ -1,4 +1,4 @@
-class_name Challenge
+class_name ChallengeDealUtility
 
 const lvldeals = [
 	[],
@@ -34,7 +34,7 @@ static func get_next_game() -> int:
 	if challenge_lvl < lvldeals.size():
 		return lvldeals[challenge_lvl][get_challenge_lvl_progress()]
 	else:
-		return Deal.hard_deal_nbrs[randi() % Deal.hard_deal_nbrs.size()]
+		return DealsUtility.hard_deals[randi() % DealsUtility.hard_deals.size()]
 
 static func completed_challenge_deal():
 	var stats = PlayerProfile.get_player_profile().player_stats

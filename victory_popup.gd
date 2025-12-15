@@ -1,7 +1,5 @@
 extends CenterContainer
 
-@export var board: Board
-
 @onready var background = $Background
 @onready var congrats = $Content/Congrats
 @onready var challenge_progress = $Content/ChallengeProgress
@@ -12,7 +10,7 @@ extends CenterContainer
 func _ready():
 	self.visible = false
 	challenge_progress.visible = false
-	board.game_won.connect(on_game_won)
+	ManageGameStates.ref.game_won.connect(on_game_won)
 
 func on_game_won(_game_nbr: int, _moves: int, _time: int, is_challenge_game: bool):
 
@@ -31,15 +29,15 @@ func _input(event):
 		self.visible = false
 
 func _advance_progress_bar():
-	var target_progress: int = Challenge.get_challenge_lvl_progress()
-	var target_level: int = Challenge.get_challenge_lvl()
+	var target_progress: int = ChallengeDealUtility.get_challenge_lvl_progress()
+	var target_level: int = ChallengeDealUtility.get_challenge_lvl()
 	var lvl_up: bool = false
 
 	if target_progress > 0:
-		progress_bar.max_value = Challenge.get_challenge_lvl_size()
+		progress_bar.max_value = ChallengeDealUtility.get_challenge_lvl_size()
 	else:
 		lvl_up = true
-		target_progress = Challenge.get_previous_challenge_lvl_size()
+		target_progress = ChallengeDealUtility.get_previous_challenge_lvl_size()
 		progress_bar.max_value = target_progress
 		target_level -= 1
 
@@ -56,10 +54,9 @@ func _advance_progress_bar():
 		await get_tree().create_timer(0.02).timeout
 	
 	if lvl_up:
-		progress_bar.max_value = Challenge.get_challenge_lvl_size()
+		progress_bar.max_value = ChallengeDealUtility.get_challenge_lvl_size()
 		progress_bar.value = 0
 		progress_label.text = "%s/%s" % [0, progress_bar.max_value as int]
 		level_label.text = "Level %s" % (target_level + 1)
 	
 	
-

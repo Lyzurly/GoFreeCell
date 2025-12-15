@@ -1,5 +1,4 @@
-class_name Card
-extends Button
+class_name Card extends Button
 
 enum Suit {CLUBS, DIAMONDS, HEARTS, SPADES}
 enum SuitColor {RED, BLACK}
@@ -16,8 +15,7 @@ var cell: Cell
 var previous_position: Vector2
 var previous_z_index: int
 var double_clicked: bool
-@onready var board: Board = $/root/Game/Board
-@onready var audio: Node = $/root/Game/Audio
+
 @onready var sprite: CardSprite = $CardSprite
 
 
@@ -48,21 +46,27 @@ func _on_button_up():
 	var target_cell
 	if double_clicked:
 		double_clicked = false
-		target_cell = board.get_best_available_cell(self)
+		target_cell = Board.ref.get_best_available_cell(self)
 	else:
-		target_cell = board.get_target_cell(self)
+		target_cell = Board.ref.get_target_cell(self)
 
 	if target_cell != null && target_cell.is_card_allowed(self):
 		if target_cell.type == Cell.CellType.FoundationCell:
-			audio.get_node("Foundation").play()
+			ManageAudio.ref.play_sound(
+				ManageAudio.ref.SOUND_NAMES.CARD_HARD
+				)
 		else:
-			audio.get_node("Snap").play()
+			ManageAudio.ref.play_sound(
+				ManageAudio.ref.SOUND_NAMES.CARD_HARD
+				)
 		var old_cell = cell
 		cell.remove_card(self)
 		target_cell.add_card(self)
-		board.card_moved.emit(self, old_cell, target_cell)
+		Board.ref.card_moved.emit(self, old_cell, target_cell)
 	else:
-		audio.get_node("Revert").play()
+		ManageAudio.ref.play_sound(
+			ManageAudio.ref.SOUND_NAMES.CARD_SOFT
+			)
 		restore_position()
 
 func _on_gui_input(event: InputEvent) -> void:

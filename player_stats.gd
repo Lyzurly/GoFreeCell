@@ -19,9 +19,9 @@ signal player_stats_changed()
 func _init():
 	challenge_lvl = 1
 
-func monitor_player_stats(board: Board):
-	board.new_game_started.connect(on_new_game_started)
-	board.game_won.connect(on_game_won)	
+func monitor_player_stats():
+	ManageGameStates.ref.new_game_started.connect(on_new_game_started)
+	ManageGameStates.ref.game_won.connect(on_game_won)	
 
 func on_new_game_started(_deal_nbr: int, _is_challenge_deal: bool):
 	games_started += 1

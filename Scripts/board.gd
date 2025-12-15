@@ -1,5 +1,7 @@
-class_name Board
-extends CanvasLayer
+class_name Board extends CanvasLayer
+static var ref: Board
+func _init() -> void:
+	ref = self
 
 enum CellType {Card, FreeCell, Foundation}
 
@@ -9,8 +11,6 @@ const hard_deal_nbrs: Array[int] = [169, 178, 258, 285, 322, 335, 339, 454, 463,
 const easy_deal_nbrs: Array[int] = [2, 5, 7, 8, 11, 26, 30, 33, 37, 38, 51, 54, 56, 58, 59, 77, 79, 85, 87, 91, 94, 97, 98, 99, 103, 104, 105, 109, 113, 116, 134, 144, 150, 151, 155, 163, 164, 166, 173, 179, 180, 186, 195, 198, 892, 1012, 1081, 1150, 1529, 2508, 2514, 3178, 3225, 3250, 4929, 5055, 5152, 5213, 5300, 5814, 5877, 5907, 6749, 6893, 7018, 7058, 7167, 7807, 8355, 8471, 8961, 9998, 10772, 11863, 11987, 12392, 12411, 12676, 13214, 13464, 13532, 14014, 14624, 14826, 15140, 15196, 17772, 17871, 18026, 18150, 18427, 19951, 20533, 21657, 21900, 22663, 23328, 24176, 24919, 25001, 25904, 26719, 27121, 27853, 28856, 30329, 30418, 30584, 30755, 30849, 31185, 31316]
 
 const impossible_nbrs: Array[int] = [11982, 146692, 186216, 455889, 495505, 512118, 517776, 781948]
-
-static var game_timer_scene = preload("res://game_timer.tscn")
 
 class CellInfo:
 	var cell_type: CellType
@@ -22,28 +22,25 @@ class CellInfo:
 @onready var foundation_cells: Array[Node] = foundation.get_children()
 @onready var free_cells: Array[Node] = freecells.get_children()
 @onready var tableau_cells: Array[Node] = tableau.get_children()
-@onready var audio: Node = $/root/Game/Audio
 
-var packed_card = preload("res://card.tscn")
 var current_deal_nbr: int
 var is_challenge_deal: bool
 var move_counter: int
 var game_start_time_ms: int
-var game_timer: GameTimer
 var game_completed: bool
 var player_stats: PlayerStats
 var player_settings: PlayerSettings
 
-signal new_game_started(deal_nbr: int, is_challenge_deal: bool)
+
 signal card_moved(card: Card, source: Cell, target: Cell)
 signal move_counter_changed(move_counter: int)
-signal game_won(deal_nbr: int, moves: int, time: int, is_challenge_deal: bool)
+
 
 func _ready():
 	var player_profile = PlayerProfile.get_player_profile()
 	player_stats = player_profile.player_stats
 	player_settings = player_profile.player_settings
-	player_stats.monitor_player_stats(self)
+	player_stats.monitor_player_stats()
 	card_moved.connect(on_card_moved)
 
 
@@ -54,11 +51,9 @@ func on_cards_dealt(_deal_nbr: int, _is_challenge_deal: bool):
 
 	game_completed = false
 	move_counter = 0
-	game_timer = game_timer_scene.instantiate()
-	self.add_child(game_timer)
-	game_timer.start_timer()
+	ManageGameTimer.ref.start_timer()
 
-	new_game_started.emit(_deal_nbr, _is_challenge_deal)
+	ManageGameStates.ref.new_game_started.emit(_deal_nbr, _is_challenge_deal)
 
 
 func merge_lists():
@@ -143,7 +138,10 @@ func check_auto_complete_card():
 				if target_cell.type != Cell.CellType.FoundationCell:
 					printerr("autocomplete chose a non-fitting card: suit: %s, rank: %r" % [card.suit, card.rank])
 
-				audio.get_node("Foundation").play()
+				
+				ManageAudio.ref.play_sound(
+					ManageAudio.ref.SOUND_NAMES.CARD_HARD
+					)
 				var old_cell = card.cell
 				card.z_index = 100
 				old_cell.remove_card(card)
@@ -214,15 +212,15 @@ func check_game_completed():
 		if child.cards.size() < 13:
 			return
 
-	game_timer.stop_timer()
+	ManageGameTimer.ref.stop_timer()
 	game_completed = true
 	
 	
-	var seconds = Static.bitwise_ms_to_s(game_timer.game_time_ms)
+	var seconds = HelpersUtility.bitwise_ms_to_s(ManageGameTimer.ref.get_game_time_ms())
 
 	if is_challenge_deal:
-		Challenge.completed_challenge_deal()
-	game_won.emit(
+		ChallengeDealUtility.completed_challenge_deal()
+	ManageGameStates.ref.game_won.emit(
 		current_deal_nbr,
 		move_counter,
 		seconds,

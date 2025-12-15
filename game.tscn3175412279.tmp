@@ -1,7 +1,7 @@
 [gd_scene load_steps=19 format=3 uid="uid://ssi8qn4aqiry"]
 
 [ext_resource type="Texture2D" uid="uid://b801ytd73ub2q" path="res://artwork/board/cell.png" id="1_1maw1"]
-[ext_resource type="Script" uid="uid://dpdaxto5sj550" path="res://Scripts/board.gd" id="1_61gtw"]
+[ext_resource type="Script" uid="uid://dpdaxto5sj550" path="res://board.gd" id="1_61gtw"]
 [ext_resource type="Texture2D" uid="uid://2g8ax888qqx6" path="res://artwork/board/background.png" id="2_85hxy"]
 [ext_resource type="Script" uid="uid://cc864rrsyodu5" path="res://cell.gd" id="2_xf0fn"]
 [ext_resource type="Theme" uid="uid://cu3iwi035266x" path="res://label_theme.theme" id="3_07em3"]
@@ -64,39 +64,40 @@ text = "123456"
 horizontal_alignment = 1
 script = ExtResource("4_igxoy")
 
-[node name="Game_Info" type="HBoxContainer" parent="Board/TopBar"]
+[node name="Stats" type="HBoxContainer" parent="Board/TopBar" node_paths=PackedStringArray("board")]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 30
 alignment = 1
 script = ExtResource("5_1ul02")
+board = NodePath("../..")
 
-[node name="MoveCounter" type="VBoxContainer" parent="Board/TopBar/Game_Info"]
+[node name="MoveCounter" type="VBoxContainer" parent="Board/TopBar/Stats"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Board/TopBar/Game_Info/MoveCounter"]
+[node name="Label" type="Label" parent="Board/TopBar/Stats/MoveCounter"]
 layout_mode = 2
 theme = ExtResource("3_07em3")
 text = "Moves"
 horizontal_alignment = 1
 
-[node name="Moves" type="Label" parent="Board/TopBar/Game_Info/MoveCounter"]
+[node name="Moves" type="Label" parent="Board/TopBar/Stats/MoveCounter"]
 layout_mode = 2
 theme = ExtResource("3_07em3")
 theme_override_font_sizes/font_size = 35
 text = "0"
 horizontal_alignment = 1
 
-[node name="Timer" type="VBoxContainer" parent="Board/TopBar/Game_Info"]
+[node name="Timer" type="VBoxContainer" parent="Board/TopBar/Stats"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Board/TopBar/Game_Info/Timer"]
+[node name="Label" type="Label" parent="Board/TopBar/Stats/Timer"]
 layout_mode = 2
 theme = ExtResource("3_07em3")
 text = "Time"
 horizontal_alignment = 1
 
-[node name="Time" type="Label" parent="Board/TopBar/Game_Info/Timer"]
+[node name="Time" type="Label" parent="Board/TopBar/Stats/Timer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 35
 text = "0:00"
@@ -696,7 +697,7 @@ theme = ExtResource("3_07em3")
 theme_override_font_sizes/font_size = 30
 text = "2/10"
 
-[node name="SettingsPopup" type="Control" parent="Board/Popups" node_paths=PackedStringArray("background")]
+[node name="SettingsPopup" type="Control" parent="Board/Popups" node_paths=PackedStringArray("difficulty", "max_deal_nbr", "autocomplete", "color_picker", "background")]
 visible = false
 z_index = 999
 custom_minimum_size = Vector2(400, 300)
@@ -713,6 +714,10 @@ offset_bottom = 150.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("15_os37y")
+difficulty = NodePath("VBoxContainer/Difficulty/OptionButton")
+max_deal_nbr = NodePath("VBoxContainer/DealNbrs/LineEdit")
+autocomplete = NodePath("VBoxContainer/Autocomplete/OptionButton")
+color_picker = NodePath("VBoxContainer/Background/ColorPickerButton")
 background = NodePath("../../Background")
 
 [node name="Background" type="TextureRect" parent="Board/Popups/SettingsPopup"]
@@ -755,8 +760,7 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 40
 text = "Difficulty"
 
-[node name="Difficulty_OptionButton" type="OptionButton" parent="Board/Popups/SettingsPopup/VBoxContainer/Difficulty"]
-unique_name_in_owner = true
+[node name="OptionButton" type="OptionButton" parent="Board/Popups/SettingsPopup/VBoxContainer/Difficulty"]
 layout_mode = 2
 size_flags_horizontal = 10
 theme = ExtResource("3_07em3")
@@ -778,8 +782,7 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 40
 text = "Max deal nbr"
 
-[node name="DealNumber_LineEdit" type="LineEdit" parent="Board/Popups/SettingsPopup/VBoxContainer/DealNbrs"]
-unique_name_in_owner = true
+[node name="LineEdit" type="LineEdit" parent="Board/Popups/SettingsPopup/VBoxContainer/DealNbrs"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 35
@@ -795,8 +798,7 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 40
 text = "Auto-complete"
 
-[node name="Autocomplete_OptionButton" type="OptionButton" parent="Board/Popups/SettingsPopup/VBoxContainer/Autocomplete"]
-unique_name_in_owner = true
+[node name="OptionButton" type="OptionButton" parent="Board/Popups/SettingsPopup/VBoxContainer/Autocomplete"]
 layout_mode = 2
 size_flags_horizontal = 10
 theme = ExtResource("3_07em3")
@@ -822,7 +824,6 @@ theme_override_font_sizes/font_size = 40
 text = "Background"
 
 [node name="ColorPickerButton" type="ColorPickerButton" parent="Board/Popups/SettingsPopup/VBoxContainer/Background"]
-unique_name_in_owner = true
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 size_flags_horizontal = 10
@@ -845,7 +846,7 @@ grow_vertical = 0
 theme_override_font_sizes/font_size = 40
 text = "Close"
 
-[node name="VictoryPopup" type="CenterContainer" parent="Board/Popups"]
+[node name="VictoryPopup" type="CenterContainer" parent="Board/Popups" node_paths=PackedStringArray("board")]
 visible = false
 z_index = 998
 layout_mode = 1
@@ -856,6 +857,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 0
 script = ExtResource("16_ifrha")
+board = NodePath("../..")
 
 [node name="Background" type="TextureRect" parent="Board/Popups/VictoryPopup"]
 self_modulate = Color(0.0784314, 0.4, 0.101961, 1)
@@ -930,8 +932,8 @@ text = "Level 2"
 [connection signal="pressed" from="Board/Menus/DealMenu/DealButtons/Buttons/CustomDeal" to="Board/Menus/DealMenu" method="open_deal_number_popup"]
 [connection signal="pressed" from="Board/Menus/DealMenu/DealButtons/Buttons/RestartDeal" to="Board/Menus/DealMenu" method="redeal"]
 [connection signal="text_submitted" from="Board/Menus/DealMenu/DealNumberPopup/VBoxContainer/LineEdit" to="Board/Menus/DealMenu" method="custom_deal"]
-[connection signal="item_selected" from="Board/Popups/SettingsPopup/VBoxContainer/Difficulty/Difficulty_OptionButton" to="Board/Popups/SettingsPopup" method="on_difficulty_selected"]
-[connection signal="text_changed" from="Board/Popups/SettingsPopup/VBoxContainer/DealNbrs/DealNumber_LineEdit" to="Board/Popups/SettingsPopup" method="on_max_deal_nbr_changed"]
-[connection signal="item_selected" from="Board/Popups/SettingsPopup/VBoxContainer/Autocomplete/Autocomplete_OptionButton" to="Board/Popups/SettingsPopup" method="on_autocomplete_selected"]
+[connection signal="item_selected" from="Board/Popups/SettingsPopup/VBoxContainer/Difficulty/OptionButton" to="Board/Popups/SettingsPopup" method="on_difficulty_selected"]
+[connection signal="text_changed" from="Board/Popups/SettingsPopup/VBoxContainer/DealNbrs/LineEdit" to="Board/Popups/SettingsPopup" method="on_max_deal_nbr_changed"]
+[connection signal="item_selected" from="Board/Popups/SettingsPopup/VBoxContainer/Autocomplete/OptionButton" to="Board/Popups/SettingsPopup" method="on_autocomplete_selected"]
 [connection signal="color_changed" from="Board/Popups/SettingsPopup/VBoxContainer/Background/ColorPickerButton" to="Board/Popups/SettingsPopup" method="on_background_color_selected"]
 [connection signal="pressed" from="Board/Popups/SettingsPopup/Button" to="Board/Popups/SettingsPopup" method="close"]
